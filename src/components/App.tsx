@@ -31,7 +31,16 @@ function App() {
           />
         ))}
       </Photos>
-      {photo.length && <Button text="Pobierz więcej" handleClick={getMore} />}
+      {photo.length && (
+        <Button
+          text="Pobierz więcej"
+          handleClick={getMore}
+          bgColor="white"
+          color="black"
+          position="fixed"
+          customCss="bottom: 0; left: 50%; translate: -50% -50%; box-shadow: 0 0 10px 2px rgba(0,0,0,.1);"
+        />
+      )}
     </Container>
   );
 }

@@ -1,12 +1,38 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { ButtonTypes } from "./Button.types";
 
-export const Btn = styled.button`
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  translate: -50% -50%;
+const positions = {
+  fixed: css`
+    position: fixed;
+  `,
+  relative: css`
+    position: relative;
+  `,
+  absolute: css`
+    position: absolute;
+  `,
+};
+
+export const Btn = styled.button<Partial<ButtonTypes>>`
+  display: block;
+  ${({ position }) => position && positions[position]}
+  ${({ customCss }) =>
+    customCss &&
+    css`
+      ${customCss}
+    `}
   padding: 10px 20px;
   border: none;
   border-radius: 20px;
-  font-size: 2rem;
+  cursor: pointer;
+  ${({ bgColor }) =>
+    bgColor &&
+    css`
+      background-color: ${bgColor};
+    `};
+  ${({ color }) =>
+    color &&
+    css`
+      color: ${color};
+    `}
 `;

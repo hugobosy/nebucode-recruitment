@@ -10,5 +10,6 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 20px;
     background-color: #000;
+    font-family: Verdana, sans-serif;
   }
 `;

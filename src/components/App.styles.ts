@@ -16,5 +16,6 @@ export const Photos = styled.div`
   img {
     width: 100%;
     margin-bottom: 1em;
+    border-radius: 10px;
   }
 `;

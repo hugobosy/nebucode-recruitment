@@ -1,8 +1,10 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Search } from "./SearchInput.styles";
+import { Search, Wrapper } from "./SearchInput.styles";
 import { SearchInputTypes } from "./SearchInput.types";
 import useDebounce from "../../hooks/useDebonce";
+import { useLocalStorage } from "usehooks-ts";
+import { Button } from "../button/Button";
 
 export const SearchInput: React.FC<SearchInputTypes> = ({
   setPhoto,
@@ -12,10 +14,24 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const debouncedValue = useDebounce<string>(inputValue, 1000);
+  const [history, setHistory] = useLocalStorage<string[]>("history", []);
   const clientId = "4EAKXWpOh2Uwu5o4a3L5EAQn6bjiK79wrfNLjTKHTos";
 
+  const latestSearch = () => {
+    setHistory((prev) => {
+      return inputValue.length !== 0 ? prev.concat(inputValue) : prev;
+    });
+  };
+
+  const lastSearch = [...new Set<string>(history)].slice(-5);
+  console.log(lastSearch);
+
   useEffect(() => {
-    function getPhoto() {
+    latestSearch();
+  }, [debouncedValue]);
+
+  useEffect(() => {
+    const getPhoto = () => {
       try {
         axios
           .get(
@@ -28,8 +44,7 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
       } catch (e) {
         console.log("Error", e);
       }
-    }
-
+    };
     getPhoto();
   }, [debouncedValue, page]);
 
@@ -38,14 +53,30 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
   };
 
   return (
-    <Search
-      type="search"
-      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-        setPhoto([]);
-        setPage(1);
-        handleChange(e);
-      }}
-      value={inputValue}
-    />
+    <Wrapper>
+      <Search
+        type="search"
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          setPhoto([]);
+          setPage(1);
+          handleChange(e);
+        }}
+        value={inputValue}
+        placeholder="Wyszukaj..."
+      />
+      <div>
+        <p>Ostatnie wyszukiwane frazy:</p>
+        {lastSearch.map((item) => (
+          <Button
+            text={item}
+            bgColor="transparent"
+            color="white"
+            position="relative"
+            handleClick={() => setInputValue(item)}
+            customCss="bottom: 0; left: 0;"
+          />
+        ))}
+      </div>
+    </Wrapper>
   );
 };
