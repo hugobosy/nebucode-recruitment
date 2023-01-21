@@ -7,3 +7,14 @@ export const Container = styled.div`
   max-width: 1400px;
   margin: 0 auto;
 `;
+
+export const Photos = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+  width: 100%;
+  img {
+    max-width: 100%;
+    height: 100%;
+  }
+`;
