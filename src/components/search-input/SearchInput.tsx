@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { Search } from "./SearchInput.styles";
 import { SearchInputTypes } from "./SearchInput.types";
+import useDebounce from "../../hooks/useDebonce";
 
 export const SearchInput: React.FC<SearchInputTypes> = ({
   setPhoto,
@@ -9,7 +10,8 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
   photo,
   setPage,
 }) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const debouncedValue = useDebounce<string>(inputValue, 1000);
   const clientId = "4EAKXWpOh2Uwu5o4a3L5EAQn6bjiK79wrfNLjTKHTos";
 
   useEffect(() => {
@@ -29,16 +31,21 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
     }
 
     getPhoto();
-  }, [inputValue, page]);
+  }, [debouncedValue, page]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
   return (
     <Search
       type="search"
-      onChange={(e) => {
+      onChange={(e: ChangeEvent<HTMLInputElement>) => {
         setPhoto([]);
         setPage(1);
-        setInputValue(e.target.value);
+        handleChange(e);
       }}
+      value={inputValue}
     />
   );
 };
