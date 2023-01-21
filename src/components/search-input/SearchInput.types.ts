@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
+import { Photo } from "../../types";
 
 export interface SearchInputTypes {
-  setPhoto: Dispatch<SetStateAction<any>>;
+  setPhoto: Dispatch<SetStateAction<Photo[]>>;
   page: number;
-  photo: any[];
+  photo: Photo[];
+  setPage: Dispatch<SetStateAction<number>>;
 }

@@ -5,7 +5,7 @@ import { Button } from "./button/Button";
 import { Photo } from "../types";
 
 function App() {
-  const [photo, setPhoto] = useState([]);
+  const [photo, setPhoto] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
   // let perPage = 12;
   console.log(photo);
@@ -16,7 +16,12 @@ function App() {
 
   return (
     <Container>
-      <SearchInput setPhoto={setPhoto} page={page} photo={photo} />
+      <SearchInput
+        setPhoto={setPhoto}
+        page={page}
+        photo={photo}
+        setPage={setPage}
+      />
       <Photos>
         {photo.map((item: Photo) => (
           <img

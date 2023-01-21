@@ -7,6 +7,7 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
   setPhoto,
   page,
   photo,
+  setPage,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const clientId = "4EAKXWpOh2Uwu5o4a3L5EAQn6bjiK79wrfNLjTKHTos";
@@ -34,6 +35,8 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
     <Search
       type="search"
       onChange={(e) => {
+        setPhoto([]);
+        setPage(1);
         setInputValue(e.target.value);
       }}
     />
