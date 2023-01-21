@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   body {
+    margin: 20px;
     background-color: #000;
   }
 `;

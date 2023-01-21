@@ -9,6 +9,7 @@ export const Container = styled.div`
 `;
 
 export const Photos = styled.div`
+  margin-top: 50px;
   padding: 1em;
   column-count: 4;
 

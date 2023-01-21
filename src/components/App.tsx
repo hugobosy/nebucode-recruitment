@@ -5,18 +5,23 @@ import { Button } from "./button/Button";
 
 function App() {
   const [photo, setPhoto] = useState([]);
-  let perPage = 12;
+  const [page, setPage] = useState(1);
+  // let perPage = 12;
   console.log(photo);
+
+  const getMore = () => {
+    setPage(page + 1);
+  };
 
   return (
     <Container>
-      <SearchInput setPhoto={setPhoto} perPage={perPage} />
+      <SearchInput setPhoto={setPhoto} page={page} />
       <Photos>
         {photo.map((item: any) => (
           <img key={item.download} src={item.links.download} alt="" />
         ))}
       </Photos>
-      {photo.length && <Button text="Pobierz więcej" />}
+      {photo.length && <Button text="Pobierz więcej" handleClick={getMore} />}
     </Container>
   );
 }

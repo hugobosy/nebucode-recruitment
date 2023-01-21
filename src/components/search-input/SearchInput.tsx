@@ -3,10 +3,7 @@ import axios from "axios";
 import { Search } from "./SearchInput.styles";
 import { SearchInputTypes } from "./SearchInput.types";
 
-export const SearchInput: React.FC<SearchInputTypes> = ({
-  setPhoto,
-  perPage,
-}) => {
+export const SearchInput: React.FC<SearchInputTypes> = ({ setPhoto, page }) => {
   const [inputValue, setInputValue] = useState("");
   const clientId = "4EAKXWpOh2Uwu5o4a3L5EAQn6bjiK79wrfNLjTKHTos";
 
@@ -15,10 +12,10 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
       try {
         axios
           .get(
-            `https://api.unsplash.com/search/photos?client_id=${clientId}&query=${inputValue}&per_page=${perPage}`
+            `https://api.unsplash.com/search/photos?client_id=${clientId}&query=${inputValue}&page=${page}`
           )
           .then((res) => {
-            console.log(res.data);
+            console.log(res.data.results);
             setPhoto(res.data.results);
           });
       } catch (e) {
@@ -27,7 +24,7 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
     }
 
     getPhoto();
-  }, [inputValue, perPage]);
+  }, [inputValue, page]);
   // function debounce(cb: any, delay = 1000) {
   //   let timeout: ReturnType<typeof setTimeout>;
   //
