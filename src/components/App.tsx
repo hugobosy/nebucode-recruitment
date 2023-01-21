@@ -15,10 +15,10 @@ function App() {
 
   return (
     <Container>
-      <SearchInput setPhoto={setPhoto} page={page} />
+      <SearchInput setPhoto={setPhoto} page={page} photo={photo} />
       <Photos>
         {photo.map((item: any) => (
-          <img key={item.download} src={item.links.download} alt="" />
+          <img key={item.links.download} src={item.links.download} alt="" />
         ))}
       </Photos>
       {photo.length && <Button text="Pobierz więcej" handleClick={getMore} />}

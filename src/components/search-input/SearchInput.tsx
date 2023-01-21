@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Search } from "./SearchInput.styles";
 import { SearchInputTypes } from "./SearchInput.types";
+import { useDispatch, useSelector } from "react-redux";
 
 export const SearchInput: React.FC<SearchInputTypes> = ({ setPhoto, page }) => {
   const [inputValue, setInputValue] = useState("");
