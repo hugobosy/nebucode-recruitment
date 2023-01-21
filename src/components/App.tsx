@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SearchInput } from "../search-input/SearchInput";
+import { SearchInput } from "./search-input/SearchInput";
 import { Container, Photos } from "./App.styles";
 
 function App() {
