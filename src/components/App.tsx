@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SearchInput } from "./search-input/SearchInput";
 import { Container, Photos } from "./App.styles";
 import { Button } from "./button/Button";
+import { Photo } from "../types";
 
 function App() {
   const [photo, setPhoto] = useState([]);
@@ -17,8 +18,12 @@ function App() {
     <Container>
       <SearchInput setPhoto={setPhoto} page={page} photo={photo} />
       <Photos>
-        {photo.map((item: any) => (
-          <img key={item.links.download} src={item.links.download} alt="" />
+        {photo.map((item: Photo) => (
+          <img
+            key={item.links.download}
+            src={item.links.download}
+            alt={item.description}
+          />
         ))}
       </Photos>
       {photo.length && <Button text="Pobierz więcej" handleClick={getMore} />}

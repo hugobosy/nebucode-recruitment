@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Search } from "./SearchInput.styles";
 import { SearchInputTypes } from "./SearchInput.types";
-import { useDispatch, useSelector } from "react-redux";
 
-export const SearchInput: React.FC<SearchInputTypes> = ({ setPhoto, page }) => {
+export const SearchInput: React.FC<SearchInputTypes> = ({
+  setPhoto,
+  page,
+  photo,
+}) => {
   const [inputValue, setInputValue] = useState("");
   const clientId = "4EAKXWpOh2Uwu5o4a3L5EAQn6bjiK79wrfNLjTKHTos";
 
@@ -17,7 +20,7 @@ export const SearchInput: React.FC<SearchInputTypes> = ({ setPhoto, page }) => {
           )
           .then((res) => {
             console.log(res.data.results);
-            setPhoto(res.data.results);
+            setPhoto(photo.concat(res.data.results));
           });
       } catch (e) {
         console.log("Error", e);
@@ -26,20 +29,6 @@ export const SearchInput: React.FC<SearchInputTypes> = ({ setPhoto, page }) => {
 
     getPhoto();
   }, [inputValue, page]);
-  // function debounce(cb: any, delay = 1000) {
-  //   let timeout: ReturnType<typeof setTimeout>;
-  //
-  //   return (...args: string[]) => {
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(() => {
-  //       cb(...args);
-  //     }, delay);
-  //   };
-  // }
-  //
-  // const updateState = debounce((text: string) => {
-  //   setInputValue(text);
-  // }, 250);
 
   return (
     <Search
