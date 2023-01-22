@@ -7,8 +7,6 @@ import { Photo } from "../types";
 function App() {
   const [photo, setPhoto] = useState<Photo[]>([]);
   const [page, setPage] = useState(1);
-  // let perPage = 12;
-  console.log(photo);
 
   const getMore = () => {
     setPage(page + 1);
@@ -31,6 +29,7 @@ function App() {
           />
         ))}
       </Photos>
+
       {photo.length && (
         <Button
           text="Pobierz więcej"

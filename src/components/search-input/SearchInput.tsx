@@ -1,9 +1,8 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { Search, Wrapper } from "./SearchInput.styles";
 import { SearchInputTypes } from "./SearchInput.types";
-import useDebounce from "../../hooks/useDebonce";
-import { useLocalStorage } from "usehooks-ts";
+import { useDebounce, useLocalStorage } from "usehooks-ts";
 import { Button } from "../button/Button";
 
 export const SearchInput: React.FC<SearchInputTypes> = ({
@@ -23,7 +22,8 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
     });
   };
 
-  const lastSearch = [...new Set<string>(history)].slice(-5);
+  // const lastSearch = [...new Set<string>(history)].slice(-5);
+  const lastSearch = history.slice(-5);
   console.log(lastSearch);
 
   useEffect(() => {
@@ -38,7 +38,6 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
             `https://api.unsplash.com/search/photos?client_id=${clientId}&query=${inputValue}&page=${page}`
           )
           .then((res) => {
-            console.log(res.data.results);
             setPhoto(photo.concat(res.data.results));
           });
       } catch (e) {
@@ -72,7 +71,10 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
             bgColor="transparent"
             color="white"
             position="relative"
-            handleClick={() => setInputValue(item)}
+            handleClick={() => {
+              setPhoto([]);
+              setInputValue(item);
+            }}
             customCss="bottom: 0; left: 0;"
           />
         ))}
