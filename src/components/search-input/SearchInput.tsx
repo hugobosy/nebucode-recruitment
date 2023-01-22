@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import axios from "axios";
 import { Search, Wrapper } from "./SearchInput.styles";
 import { SearchInputTypes } from "./SearchInput.types";
 import { useDebounce, useLocalStorage } from "usehooks-ts";
 import { Button } from "../button/Button";
+import { getPhoto } from "../../utils/getPhoto";
 
 export const SearchInput: React.FC<SearchInputTypes> = ({
   setPhoto,
@@ -22,29 +22,14 @@ export const SearchInput: React.FC<SearchInputTypes> = ({
     });
   };
 
-  // const lastSearch = [...new Set<string>(history)].slice(-5);
   const lastSearch = history.slice(-5);
-  console.log(lastSearch);
 
   useEffect(() => {
     latestSearch();
   }, [debouncedValue]);
 
   useEffect(() => {
-    const getPhoto = () => {
-      try {
-        axios
-          .get(
-            `https://api.unsplash.com/search/photos?client_id=${clientId}&query=${inputValue}&page=${page}`
-          )
-          .then((res) => {
-            setPhoto(photo.concat(res.data.results));
-          });
-      } catch (e) {
-        console.log("Error", e);
-      }
-    };
-    getPhoto();
+    getPhoto(clientId, inputValue, page, setPhoto, photo);
   }, [debouncedValue, page]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
